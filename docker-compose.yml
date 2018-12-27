@@ -1,0 +1,23 @@
+version: '2'
+services:
+    dev-apiato-mysql:
+        image: mariadb:10.0
+        restart: always
+        container_name: dev-apiato-db
+        volumes:
+             - ./mysql/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+        environment:
+             MYSQL_ROOT_PASSWORD: 4GkVDjd7X3XHRs2k
+             MYSQL_DATABASE: admin_apiato
+             MYSQL_USER: admin_apiato
+             MYSQL_PASSWORD: IMqgPw9CkV
+    dev-apiato-server:
+        build:
+          context: ./app
+          dockerfile: ../Dockerfile
+        restart: always
+        container_name: dev-apiato-server
+        volumes:
+            - ./app:/var/www/html
+        ports:
+            - "9000:9000"
